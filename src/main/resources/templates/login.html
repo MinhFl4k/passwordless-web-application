@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script th:src="@{/js/login-passkey.js}"></script>
+</head>
+<style>
+    .navbar {
+        background-color: #d9edf7;
+    }
+
+</style>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2>Login</h2>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+    <div th:if="${error}" class="alert alert-danger">
+        <span th:text="${error}"></span>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label class="control-label" for="username"> Email </label>
+            <input type="email" id="username" name="username" placeholder="Enter your email"  class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="password"> Password </label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Login</button>
+        </div>
+
+        <div class="form-group">
+            <span> Don't have an account? <a href="/" th:href="@{/signup}">Signup here</a></span>
+        </div>
+    </form>
+
+    <hr>
+
+    <div style="display: flex; gap: 10px;">
+        <a href="#" class="btn btn-success" id="login-passkey-link">
+            <i class="fa fa-key"></i> Login with Passkey
+        </a>
+        <a href="/" th:href="@{/login-with-otp}" class="btn btn-danger">Login with Verification code</a>
+        <a href="/" th:href="@{/login-with-link}" class="btn btn-warning">Send a login link</a>
+        <a href="/" th:href="@{/login-with-totp}" class="btn btn-primary">Login with Authenticator app</a>
+    </div>
+    <div id="login-passkey-message" class="text-info"></div>
+
+    <hr>
+
+    <div style="display: flex; gap: 10px;">
+        <a th:href="@{/oauth2/authorization/google}" class="btn btn-danger">
+            <i class="fa fa-google"></i> Login with Google
+        </a>
+        <a th:href="@{/oauth2/authorization/facebook}" class="btn btn-dark">
+            <i class="fa fa-facebook"></i> Login with Facebook
+        </a>
+    </div>
+    <hr>
+</div>
+
+<script>
+    document.getElementById("login-passkey-link").addEventListener("click", function (event) {
+        event.preventDefault();
+        loginWithPasskey();
+    });
+</script>
+
+</body>
+</html>

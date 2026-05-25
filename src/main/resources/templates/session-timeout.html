@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Session timeout</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #f2dede;
+        }
+
+        .alert-box {
+            margin-top: 40px;
+            padding: 25px;
+            border: 1px solid #ebccd1;
+            background-color: #fdf2f2;
+            border-radius: 6px;
+        }
+
+        .alert-title {
+            color: #a94442;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2>Session timeout</h2>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert-box">
+                <h3 class="alert-title">Your login session has ended</h3>
+                <p>
+                    Please log in again.
+                </p>
+
+                <br>
+
+                <a th:href="@{/login}" class="btn btn-primary">Back to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

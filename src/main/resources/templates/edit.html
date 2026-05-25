@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Profile</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<style>
+    .navbar {
+        background-color: #d9edf7;
+    }
+    .anchor{
+        margin: 6px;
+        background-color: #d9edf7;
+        border-color: #d9edf7;
+    }
+
+    input, label {
+        display:block;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .error-text {
+        color: #a94442;
+        margin-top: 5px;
+        font-size: 13px;
+    }
+    .alert-custom {
+        margin-top: 15px;
+    }
+</style>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2>Edit Profile</h2>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form th:action="@{/edit-profile}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" th:field="${user.name}" class="form-control" placeholder="Enter your name"/>
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('name')}"
+                       th:errors="${user.name}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input id="email" th:field="${user.email}" class="form-control" placeholder="Enter your email"/>
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('email')}"
+                       th:errors="${user.email}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" th:field="${user.phone}" class="form-control" placeholder="Enter your phone"/>
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('phone')}"
+                       th:errors="${user.phone}"></p>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a th:href="@{/home}" class="btn btn-default">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload();
+        }
+    });
+</script>
+
+</body>
+</html>

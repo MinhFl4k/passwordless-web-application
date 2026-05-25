@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<style>
+    .navbar {
+        background-color: #d9edf7;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .error-text {
+        color: #a94442;
+        margin-top: 5px;
+        font-size: 13px;
+    }
+    .alert-custom {
+        margin-top: 15px;
+    }
+</style>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2>Home</h2>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Sign up</h1>
+
+            <div th:if="${errorMessage}"
+                 class="alert alert-danger alert-custom"
+                 th:text="${errorMessage}">
+            </div>
+
+            <form action="#" th:action="@{/signup}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label class="control-label" for="name">
+                        Name:
+                    </label>
+                    <input id="name" class="form-control"
+                           th:field="*{name}"
+                           autofocus="autofocus" />
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email"> Email
+                    </label> <input id="email" class="form-control"
+                                    th:field="*{email}" autofocus="autofocus"/>
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="phone"> Phone number
+                    </label> <input id="phone" class="form-control"
+                                    th:field="*{phone}" autofocus="autofocus"/>
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('phone')}"
+                       th:errors="*{phone}"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password">
+                        Password </label> <input id="password"
+                                                 class="form-control" type="password"
+                                                 th:field="*{password}"
+                                                 autofocus="autofocus" />
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="confirmPassword">
+                        Confirm password </label> <input id="confirmPassword"
+                                                 class="form-control" type="password"
+                                                 th:field="*{confirmPassword}"
+                                                 autofocus="autofocus" />
+                    <p class="error-text"
+                       th:if="${#fields.hasErrors('confirmPassword')}"
+                       th:errors="*{confirmPassword}"></p>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Signup</button>
+                    <span>Already signed up?
+                        <a href="/" th:href="@{/login}">Back to Login</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

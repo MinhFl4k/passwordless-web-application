@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account verified</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="margin-top: 100px; max-width: 600px;">
+    <div class="alert alert-success">
+        <h2>Congratulation! <span th:text="${name}"></span>. Your account is verified.</h2>
+        <h3>
+            Your login email is <strong th:text="${email}"></strong>.
+        </h3>
+        <h3>
+            Please <a th:href="@{/login}">click here to login</a>.
+        </h3>
+    </div>
+</div>
+</body>
+</html>
