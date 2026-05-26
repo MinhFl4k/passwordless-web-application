@@ -41,7 +41,7 @@ public class TotpAuthProvider implements AuthenticationProvider {
         try {
             userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(email.trim());
         } catch (UsernameNotFoundException ex) {
-            throw new BadCredentialsException(ErrorMessage.USER_NOT_FOUND.getMessage());
+            throw new BadCredentialsException(ErrorMessage.INVALID_EMAIL_PASSWORD.getMessage());
         }
 
         userDetailsChecker.check(userDetails);

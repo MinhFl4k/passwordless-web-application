@@ -1,8 +1,10 @@
 package com.app.demo.model;
 
-import com.app.demo.enums.RoleEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -10,23 +12,21 @@ import org.hibernate.type.SqlTypes;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Role")
+@Table(name = "Department")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role {
+public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(length = 36, nullable = false, updatable = false)
-    UUID roleId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
-    RoleEnum name;
+    UUID id;
 
     @Column(nullable = false)
+    String name;
+
     String description;
 }

@@ -41,6 +41,7 @@ public class AbsoluteSessionTimeoutFilter extends OncePerRequestFilter {
 
                 if (now - loginTime >= ABSOLUTE_TIMEOUT_MILLIS) {
                     new SecurityContextLogoutHandler().logout(request, response, authentication);
+                    SecurityContextHolder.clearContext();
                     response.sendRedirect(request.getContextPath() + "/session-timeout");
                     return;
                 }

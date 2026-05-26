@@ -66,49 +66,71 @@
         <div class="form-group" th:if="${user.verified}">
             <form th:action="@{/edit-profile}" method="get" style="display:inline-block;">
                 <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-user"></span>
                     Edit profile
                 </button>
             </form>
+
             <form th:action="@{/change-password}"
                   th:if="${user.isLocalUser}"
-                  method="get" style="display:inline-block;">
+                  method="get"
+                  style="display:inline-block;">
                 <button type="submit" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-lock"></span>
                     Change password
                 </button>
             </form>
-            <input style="display:inline-block;"
-                   type="button"
-                   class="btn btn-success"
-                   value="Add One-Time password"
-                   onClick="createQRCode();"
-            />
+
+            <button type="button"
+                    class="btn btn-success"
+                    style="display:inline-block;"
+                    onClick="createQRCode();">
+                <span class="glyphicon glyphicon-qrcode"></span>
+                Add One-Time password
+            </button>
+
             <form th:action="@{/account-passkey}" method="get" style="display:inline-block;">
                 <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-credit-card"></span>
                     Add passkey
                 </button>
             </form>
         </div>
-        <div class="form-group">
-            <form th:if="${!user.verified}"
-                  th:action="@{/auth/send-verify-token}"
+
+        <div class="form-group" th:if="${user.verified}">
+            <form th:action="@{/departments/list}"
+                  method="get"
+                  style="display:inline-block;">
+                <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    Departments list
+                </button>
+            </form>
+            <form th:action="@{/list}"
+                  method="get"
+                  style="display:inline-block;">
+                <button type="submit" class="btn btn-info">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Users list
+                </button>
+            </form>
+        </div>
+
+        <div class="form-group" th:if="${!user.verified}">
+            <form th:action="@{/auth/send-verify-token}"
                   method="post"
                   style="display:inline-block;">
                 <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-ok-circle"></span>
                     Verify your account
                 </button>
             </form>
         </div>
-        <div class="form-group">
-            <div th:if="${successMessage}" class="alert alert-success">
-                <span th:text="${successMessage}"></span>
-            </div>
-            <div th:if="${errorMessage}" class="alert alert-danger">
-                <span th:text="${errorMessage}"></span>
-            </div>
-        </div>
+
         <form th:action="@{/logout}" method="post">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-log-out"></span>
                     Logout
                 </button>
             </div>

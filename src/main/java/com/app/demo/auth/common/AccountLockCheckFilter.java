@@ -68,6 +68,7 @@ public class AccountLockCheckFilter extends OncePerRequestFilter {
 
             if (locked) {
                 new SecurityContextLogoutHandler().logout(request, response, authentication);
+                SecurityContextHolder.clearContext();
                 response.sendRedirect(request.getContextPath() + "/account-locked");
                 return;
             }

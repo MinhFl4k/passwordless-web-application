@@ -26,11 +26,11 @@ public class SessionIntegrityCheckFilter extends OncePerRequestFilter {
     private static final Set<String> SENSITIVE_URLS = Set.of(
             "/account-passkey",
             "/change-password",
+            "/departments/**",
             "/edit-profile",
             "/home",
-            "/login-history",
+            "/list",
             "/passkeys/delete",
-            "/trusted-login",
             "/util/qrcode"
     );
 
@@ -63,6 +63,7 @@ public class SessionIntegrityCheckFilter extends OncePerRequestFilter {
 
             if (changed) {
                 new SecurityContextLogoutHandler().logout(request, response, authentication);
+                SecurityContextHolder.clearContext();
                 response.sendRedirect(request.getContextPath() + "/session-alert");
                 return;
             }

@@ -8,6 +8,9 @@ import com.app.demo.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface UserService {
 
     void updateAuthenticationPrincipal(User savedUser, Authentication authentication);
@@ -28,6 +31,8 @@ public interface UserService {
             Authentication authentication
     );
 
+    List<UserResDto> findAll();
+
     boolean updateUserInfo(
             Authentication authentication,
             UserUpdateDto userDto,
@@ -45,5 +50,5 @@ public interface UserService {
             String currentPassword
     );
 
-    Long getLoggedInUserId(Authentication authentication);
+    UUID getLoggedInUserId(Authentication authentication);
 }

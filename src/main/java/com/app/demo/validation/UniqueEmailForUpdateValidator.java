@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class UniqueEmailForUpdateValidator
@@ -30,7 +32,7 @@ public class UniqueEmailForUpdateValidator
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        Long loggedInUserId = userService.getLoggedInUserId(authentication);
+        UUID loggedInUserId = userService.getLoggedInUserId(authentication);
 
         if (loggedInUserId  == null) {
             return false;

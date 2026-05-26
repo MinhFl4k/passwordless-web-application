@@ -4,9 +4,12 @@ import com.app.demo.enums.AuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "User")
@@ -16,8 +19,10 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(length = 36, nullable = false, updatable = false)
+    UUID id;
 
     String name;
 
@@ -39,8 +44,6 @@ public class User {
     Integer otpFailedAttempts = 0;
 
     LocalDateTime lockedUntil;
-
-    LocalDateTime lastLoginAt;
 
     @Column(nullable = false)
     private boolean verified;

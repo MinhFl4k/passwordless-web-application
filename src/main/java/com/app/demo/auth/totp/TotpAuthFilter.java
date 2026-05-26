@@ -1,7 +1,6 @@
 package com.app.demo.auth.totp;
 
 import com.app.demo.enums.ErrorMessage;
-import com.app.demo.enums.OtpStatus;
 import com.app.demo.service.SessionSecurityService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,22 +36,11 @@ public class TotpAuthFilter extends UsernamePasswordAuthenticationFilter {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 
-        String email = request.getSession().getAttribute("TOTP_LOGIN_EMAIL").toString();
-        String totpValue = request.getParameter("otp");
-
-        email = (email != null) ? email.trim() : "";
-        totpValue = (totpValue != null) ? totpValue.trim() : "";
+        String totpValue = request.getParameter("otp").trim();
+        String email = request.getParameter("email").trim();
 
         if (email.isEmpty()) {
             throw new AuthenticationServiceException(ErrorMessage.EMAIL_REQUIRED.getMessage());
-        }
-
-        if (totpValue.isEmpty()) {
-            throw new AuthenticationServiceException(OtpStatus.NOT_FOUND.getMessage());
-        }
-
-        if (!totpValue.matches("\\d{6}")) {
-            throw new AuthenticationServiceException(OtpStatus.INVALID.getMessage());
         }
 
         TotpAuthToken authRequest =

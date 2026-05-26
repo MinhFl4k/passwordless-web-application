@@ -7,5 +7,5 @@ public interface TotpLoginService {
 
     String generateQRCode(String otpProtocol) throws Throwable;
 
-    OtpResDto validateTotp(String secret, String totpKey);
+    OtpResDto validateTotp(String secret, String totp);
 }

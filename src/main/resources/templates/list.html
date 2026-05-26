@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users list</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<style>
+    .navbar {
+        background-color: #d9edf7;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .error-text {
+        color: #a94442;
+        margin-top: 5px;
+        font-size: 13px;
+    }
+
+    .alert-custom {
+        margin-top: 15px;
+    }
+</style>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2>Home</h2>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Users list</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row" style="margin-bottom: 15px;">
+                        <div class="col-md-6 text-right">
+                            <a th:href="@{/home}" class="btn btn-default">
+                                <span class="glyphicon glyphicon-home"></span>
+                                Back
+                            </a>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr class="info">
+                            <th style="width: 70px;" class="text-center">No.</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone number</th>
+                            <th class="text-center">Locked time</th>
+                            <th class="text-center">Verified</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="user, iterStat : ${users}">
+                            <td class="text-center" th:text="${iterStat.count}"></td>
+
+                            <td th:text="${user.name}"></td>
+
+                            <td th:text="${user.email}"></td>
+
+                            <td th:text="${user.phone}"></td>
+
+                            <td th:text="${user.lockedUntil}"></td>
+
+                            <td class="text-center">
+                                <span th:if="${user.verified}" class="label label-success">
+                                    Verified
+                                </span>
+                                <span th:unless="${user.verified}" class="label label-warning">
+                                    Not verified
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(users)}">
+                            <td colspan="9" class="text-center text-muted">
+                                No users.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

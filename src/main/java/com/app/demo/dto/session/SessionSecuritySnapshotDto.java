@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SessionSecuritySnapshotDto implements Serializable {
-    Long userId;
+    UUID userId;
     String email;
     String userAgent;
     String ip;

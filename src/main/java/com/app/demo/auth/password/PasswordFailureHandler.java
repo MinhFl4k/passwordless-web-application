@@ -4,7 +4,6 @@ import com.app.demo.enums.ErrorMessage;
 import com.app.demo.model.User;
 import com.app.demo.repository.UserRepository;
 import com.app.demo.service.LoginAttemptService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,12 +27,12 @@ public class PasswordFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception)
-            throws IOException, ServletException {
+            throws IOException {
 
         HttpSession session = request.getSession();
         String email = request.getParameter("username");
 
-        String errorMessage = "Invalid email or password.";
+        String errorMessage = ErrorMessage.INVALID_EMAIL_PASSWORD.getMessage();
 
         if (exception instanceof LockedException) {
             errorMessage = ErrorMessage.ACCOUNT_LOCKED.getMessage();

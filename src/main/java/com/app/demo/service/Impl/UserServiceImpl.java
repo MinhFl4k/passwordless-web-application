@@ -24,7 +24,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.webauthn.authentication.WebAuthnAuthentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -104,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
         // Run after updateAuthenticationPrincipal
         if (principal instanceof CustomUserDetails customUserDetails) {
-            Long userId = customUserDetails.getUser().getId();
+            UUID userId = customUserDetails.getId();
 
             return userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException(ErrorMessage.USER_NOT_FOUND.getMessage()));
@@ -153,6 +155,22 @@ public class UserServiceImpl implements UserService {
         response.setVerified(user.isVerified());
 
         return response;
+    }
+
+    @Override
+    public List<UserResDto> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> new UserResDto(
+                        user.getId(),
+                        user.getName(),
+                        user.getEmail(),
+                        user.getPhone(),
+                        user.getLockedUntil(),
+                        user.isVerified(),
+                        AuthProvider.LOCAL.equals(user.getProvider())
+                ))
+                .toList();
     }
 
     @Override
@@ -266,7 +284,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long getLoggedInUserId(Authentication authentication) {
+    public UUID getLoggedInUserId(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return null;
         }
@@ -274,7 +292,7 @@ public class UserServiceImpl implements UserService {
         Object principal = authentication.getPrincipal();
 
         if (principal instanceof CustomUserDetails userDetails) {
-            return userDetails.getUser().getId();
+            return userDetails.getId();
         }
 
         return null;

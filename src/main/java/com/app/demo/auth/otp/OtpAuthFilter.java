@@ -1,7 +1,6 @@
 package com.app.demo.auth.otp;
 
 import com.app.demo.enums.ErrorMessage;
-import com.app.demo.enums.OtpStatus;
 import com.app.demo.service.SessionSecurityService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,22 +31,13 @@ public class OtpAuthFilter extends UsernamePasswordAuthenticationFilter {
             throw new AuthenticationServiceException(
                     "Unsupported authentication type: " + request.getMethod());
         }
-
-        String otp = request.getParameter("otp");
-
         Object emailAttr = request.getSession().getAttribute("OTP_LOGIN_EMAIL");
         if (emailAttr == null) {
             throw new AuthenticationServiceException(ErrorMessage.EMAIL_REQUIRED.getMessage());
         }
         String email = emailAttr.toString().trim();
-        otp = (otp != null) ? otp.trim() : "";
-        if (email.isEmpty()) {
-            throw new AuthenticationServiceException(ErrorMessage.EMAIL_REQUIRED.getMessage());
-        }
 
-        if (otp.isEmpty()) {
-            throw new AuthenticationServiceException(OtpStatus.NOT_FOUND.getMessage());
-        }
+        String otp = request.getParameter("otp").trim();
 
         OtpAuthToken authRequest =
                 new OtpAuthToken(email, otp);

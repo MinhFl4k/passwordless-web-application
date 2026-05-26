@@ -8,9 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface UserTokenRepository extends JpaRepository<UserToken, Long> {
+public interface UserTokenRepository extends JpaRepository<UserToken, UUID> {
     Optional<UserToken> findTopByEmailAndTypeOrderByCreatedAtDesc(String email, String type);
 
     Optional<UserToken> findByToken(String token);

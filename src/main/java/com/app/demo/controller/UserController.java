@@ -9,10 +9,13 @@ import com.app.demo.service.PasskeyManageService;
 import com.app.demo.service.RequestContextFingerprintService;
 import com.app.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,6 +50,14 @@ public class UserController {
 
         model.addAttribute("user", userResponseDto);
         return "home";
+    }
+
+    @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String listUsers(Model model) {
+        List<UserResDto> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "list";
     }
 
     @GetMapping("/edit-profile")
@@ -94,7 +105,9 @@ public class UserController {
             @Valid @ModelAttribute("passwordDto") ChangePasswordDto changePasswordDTO,
             BindingResult result,
             Principal principal,
-            HttpServletRequest request
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication
     ) {
         if (result.hasErrors()) {
             return "change-password";
@@ -103,11 +116,13 @@ public class UserController {
         String email = principal.getName();
         try {
             userService.changePassword(email, changePasswordDTO, request);
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            SecurityContextHolder.clearContext();
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
 
-        return "redirect:/home";
+        return "redirect:/login";
     }
 
     @GetMapping("/account-passkey")

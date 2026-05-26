@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 @UniqueEmailForUpdate
 public class UserUpdateDto {
 
-    Long id;
+    UUID id;
 
     @NotBlank(message = "Name must not be blank")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")

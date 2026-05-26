@@ -60,18 +60,22 @@ public class TotpLoginServiceImpl implements TotpLoginService {
     }
 
     @Override
-    public OtpResDto validateTotp(String secret, String totpKey) {
+    public OtpResDto validateTotp(String secret, String totp) {
 
         if (!StringUtils.hasText(secret)) {
             return new OtpResDto(OtpStatus.INVALID);
         }
 
-        if (totpKey == null) {
+        if (totp == null) {
             return new OtpResDto(OtpStatus.NOT_FOUND);
         }
 
+        if (!totp.matches("\\d{6}")) {
+            return new OtpResDto(OtpStatus.INVALID);
+        }
+
         try {
-            if (!TotpUtil.verifyCode(secret, totpKey, Integer.parseInt(TIME))) {
+            if (!TotpUtil.verifyCode(secret, totp, Integer.parseInt(TIME))) {
                 return new OtpResDto(OtpStatus.INVALID);
             }
         } catch (InvalidKeyException | NoSuchAlgorithmException e) {

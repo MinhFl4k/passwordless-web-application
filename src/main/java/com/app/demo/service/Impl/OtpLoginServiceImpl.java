@@ -57,17 +57,17 @@ public class OtpLoginServiceImpl implements OtpLoginService {
 
     @Override
     public OtpResDto validateOtp(String email, String otp) {
-        Optional<OtpCode> tokenOpt =
+        Optional<OtpCode> tokenOtp =
                 otpTokenRepository.findTopByEmailOrderByCreatedAtDesc(email);
 
         if (otp == null || !otp.matches("\\d{6}")) {
             return new OtpResDto(OtpStatus.INVALID);
         }
 
-        if (tokenOpt.isEmpty())
+        if (tokenOtp.isEmpty())
             return new OtpResDto(OtpStatus.NOT_FOUND);
 
-        OtpCode token = tokenOpt.get();
+        OtpCode token = tokenOtp.get();
 
         if (token.isUsed())
             return new OtpResDto(OtpStatus.USED);

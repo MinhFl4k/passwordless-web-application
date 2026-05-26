@@ -8,7 +8,7 @@ public enum ErrorMessage {
     ACCOUNT_LOCKED("Your account is temporarily locked due to multiple failed sign-in attempts."),
     EMAIL_EXIST("Email already exists"),
     EMAIL_REQUIRED("Email is required"),
-    EMAIL_NOT_FOUND("Email not found"),
+    DEPARTMENT_NOT_FOUND("Department not found"),
     INVALID_EMAIL_PASSWORD("Invalid email or password"),
     PASSWORD_NOT_MATCH("Password do not match"),
     ROLE_NOT_FOUND("Role not found"),
