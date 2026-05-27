@@ -1,6 +1,5 @@
 package com.app.demo.auth.common;
 
-import com.app.demo.dto.common.CustomUserDetails;
 import com.app.demo.model.User;
 import com.app.demo.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -41,6 +40,9 @@ public class AccountLockCheckFilter extends OncePerRequestFilter {
                 "/account-locked",
                 "/account-verified",
                 "/access-denied",
+                "/session-alert",
+                "/session-timeout",
+                "/auth-limit-alert",
                 "/css/**",
                 "/js/**"
         );

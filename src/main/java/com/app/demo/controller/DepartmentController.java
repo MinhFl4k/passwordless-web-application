@@ -82,7 +82,7 @@ public class DepartmentController {
         return "redirect:/departments/list";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteDepartment(@PathVariable UUID id) {
         departmentService.delete(id);
         return "redirect:/departments/list";

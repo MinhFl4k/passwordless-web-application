@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
     <meta charset="UTF-8">
@@ -100,7 +100,8 @@
         <div class="form-group" th:if="${user.verified}">
             <form th:action="@{/departments/list}"
                   method="get"
-                  style="display:inline-block;">
+                  style="display:inline-block;"
+                  sec:authorize="hasRole('USER')">
                 <button type="submit" class="btn btn-danger">
                     <span class="glyphicon glyphicon-th-list"></span>
                     Departments list
@@ -108,7 +109,8 @@
             </form>
             <form th:action="@{/list}"
                   method="get"
-                  style="display:inline-block;">
+                  style="display:inline-block;"
+                  sec:authorize="hasRole('USER')">
                 <button type="submit" class="btn btn-info">
                     <span class="glyphicon glyphicon-user"></span>
                     Users list

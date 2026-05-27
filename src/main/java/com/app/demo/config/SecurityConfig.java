@@ -2,6 +2,7 @@ package com.app.demo.config;
 
 import com.app.demo.auth.common.AbsoluteSessionTimeoutFilter;
 import com.app.demo.auth.common.AccountLockCheckFilter;
+import com.app.demo.auth.common.RateLimitFilter;
 import com.app.demo.auth.common.SessionIntegrityCheckFilter;
 import com.app.demo.auth.link.LinkAuthFilter;
 import com.app.demo.auth.link.LinkAuthProvider;
@@ -60,6 +61,8 @@ public class SecurityConfig {
     private final AccountLockCheckFilter accountLockCheckFilter;
 
     private final SessionIntegrityCheckFilter sessionIntegrityCheckFilter;
+
+    private final RateLimitFilter rateLimitFilter;
 
     private final AbsoluteSessionTimeoutFilter absoluteSessionTimeoutFilter;
 
@@ -141,6 +144,7 @@ public class SecurityConfig {
                                 "/access-denied",
                                 "/session-alert",
                                 "/session-timeout",
+                                "/auth-limit-alert",
                                 "/css/**",
                                 "/js/**"
                         ).permitAll()
@@ -158,6 +162,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .accessDeniedPage("/access-denied")
                 )
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(otpFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(totpFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(linkAuthFilter, UsernamePasswordAuthenticationFilter.class)

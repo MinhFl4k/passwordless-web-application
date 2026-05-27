@@ -255,4 +255,9 @@ public class IdentityController {
     public String showSessionTimeoutPage() {
         return "session-timeout";
     }
+
+    @GetMapping("/auth-limit-alert")
+    public String showAuthRateLimitAlert() {
+        return "auth-limit-alert";
+    }
 }
