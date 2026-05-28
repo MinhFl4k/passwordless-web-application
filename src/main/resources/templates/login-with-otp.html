@@ -40,6 +40,10 @@
 
     <hr>
 
+    <div th:if="${message}" class="alert alert-success">
+        <span th:text="${message}"></span>
+    </div>
+
     <form th:action="@{/otp-login-process}" method="post">
 
         <div class="form-group">

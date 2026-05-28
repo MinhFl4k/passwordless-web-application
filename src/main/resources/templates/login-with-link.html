@@ -32,8 +32,8 @@
             <label>Email</label>
             <input type="text" th:field="*{email}" class="form-control">
         </div>
-        <div th:if="${successMessage}" class="alert alert-success">
-            <span th:text="${successMessage}"></span>
+        <div th:if="${message}" class="alert alert-success">
+            <span th:text="${message}"></span>
         </div>
         <div th:if="${#fields.hasErrors('email')}" class="text-danger">
             <span th:errors="*{email}"></span>

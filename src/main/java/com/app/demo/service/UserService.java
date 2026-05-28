@@ -51,4 +51,6 @@ public interface UserService {
     );
 
     UUID getLoggedInUserId(Authentication authentication);
+
+    boolean isUserExist(String email);
 }

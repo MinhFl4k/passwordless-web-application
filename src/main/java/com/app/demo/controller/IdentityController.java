@@ -104,21 +104,30 @@ public class IdentityController {
     public String sendOtp(
             @Validated(ValidationSequence.class) @ModelAttribute("emailReq") EmailReqDto emailReqDto,
             BindingResult bindingResult,
-            HttpSession session
+            HttpSession session,
+            RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
             return "login-with-otp";
         }
         String email = emailReqDto.getEmail();
-        try {
-            String otp = otpLoginService.generateOtp(email);
-            emailService.sendOtp(email, otp);
-            session.setAttribute("OTP_LOGIN_EMAIL", email);
 
+        try {
+            if (userService.isUserExist(email)) {
+                String otp = otpLoginService.generateOtp(email);
+                emailService.sendOtp(email, otp);
+                session.setAttribute("OTP_LOGIN_EMAIL", email);
+            }
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
         }
-        return "redirect:/login-with-otp?sent=true";
+
+        redirectAttributes.addFlashAttribute(
+                "message",
+                "an OTP has been sent to your inbox."
+        );
+
+        return "redirect:/login-with-otp";
     }
 
     // TOTP:
@@ -167,16 +176,18 @@ public class IdentityController {
         if (bindingResult.hasErrors()) {
             return "login-with-link";
         }
-
         String email = emailReqDto.getEmail();
-
         try {
-            userTokenService.sendUserTokenLink(email, UserTokenType.LOGIN);
-            redirectAttributes.addFlashAttribute("successMessage",
-                    "Please check your email inbox");
+            if (userService.isUserExist(email)) {
+                userTokenService.sendUserTokenLink(email, UserTokenType.LOGIN);
+            }
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
         }
+
+        redirectAttributes.addFlashAttribute("message",
+                "Please check your email inbox");
+
         return "redirect:/login-with-link";
     }
 

@@ -298,5 +298,8 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
+    @Override
+    public boolean isUserExist(String email){
+        return userRepository.existsByEmail(email);
+    }
 }

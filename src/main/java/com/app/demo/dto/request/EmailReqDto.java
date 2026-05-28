@@ -18,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 public class EmailReqDto {
 
     @NotBlank(message = "Email must not be blank", groups = BasicValidation.class)
-    @Email(message = "Invalid email format", groups = BasicValidation.class)
-    @ExistingEmail(groups = AdvancedValidation.class)
+    @Email(message = "Invalid email format", groups = AdvancedValidation.class)
+//    @ExistingEmail(groups = AdvancedValidation.class)
     private String email;
 }
