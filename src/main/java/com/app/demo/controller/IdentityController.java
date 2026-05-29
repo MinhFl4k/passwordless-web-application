@@ -71,13 +71,18 @@ public class IdentityController {
     @PostMapping("/signup")
     public String signupUser(
             @Validated(ValidationSequence.class) @ModelAttribute("user") UserSignupDto userSignupDto,
-            BindingResult result
+            BindingResult result,
+            RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             return "signup";
         }
         userService.signupUser(userSignupDto);
-        return "redirect:/login?signupSuccess";
+        redirectAttributes.addFlashAttribute(
+                "message",
+                "Please check your inbox for the verification email."
+        );
+        return "redirect:/signup";
     }
 
     // OTP:
@@ -119,7 +124,7 @@ public class IdentityController {
                 session.setAttribute("OTP_LOGIN_EMAIL", email);
             }
         } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
 
         redirectAttributes.addFlashAttribute(
@@ -231,7 +236,6 @@ public class IdentityController {
 
             return "redirect:/account-verified";
         } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
             return "redirect:/error";
         }
     }

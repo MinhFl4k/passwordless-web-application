@@ -25,7 +25,7 @@ public class UserSignupDto {
 
     @NotBlank(message = "Email must not be blank", groups = BasicValidation.class)
     @Email(message = "Invalid email format", groups = BasicValidation.class)
-    @UniqueEmail(groups = AdvancedValidation.class)
+//    @UniqueEmail(groups = AdvancedValidation.class)
     String email;
 
     @Pattern(regexp = "\\d*", message = "Phone number must contain only digits", groups = BasicValidation.class)

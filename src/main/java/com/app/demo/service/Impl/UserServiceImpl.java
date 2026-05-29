@@ -14,6 +14,7 @@ import com.app.demo.service.UserTokenService;
 import com.app.demo.service.UserService;
 import com.app.demo.util.TotpUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -65,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void signupUser(UserSignupDto userSignupDto) throws IllegalArgumentException {
 
         String email = userSignupDto.getEmail();
@@ -72,10 +74,7 @@ public class UserServiceImpl implements UserService {
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.EMAIL_REQUIRED.getMessage());
         }
-
-        if(userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException(ErrorMessage.EMAIL_EXIST.getMessage());
-        }
+        if (userRepository.existsByEmail(email)) return;
 
         User user = new User();
         user.setName(userSignupDto.getName());
