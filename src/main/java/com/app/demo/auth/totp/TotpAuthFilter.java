@@ -58,6 +58,8 @@ public class TotpAuthFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult)
             throws IOException {
 
+        request.changeSessionId();
+
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);

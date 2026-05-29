@@ -34,6 +34,8 @@ public class PasskeySuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
 
+        request.changeSessionId();
+
         String email = webAuthnAuthentication.getName();
         HttpSession session = request.getSession(false);
 

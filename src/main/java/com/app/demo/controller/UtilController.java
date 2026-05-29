@@ -1,8 +1,6 @@
 package com.app.demo.controller;
 
-import com.app.demo.service.RequestContextFingerprintService;
 import com.app.demo.service.TotpLoginService;
-import com.app.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
